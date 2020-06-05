@@ -1,0 +1,24 @@
+version: '3.3'
+
+services:
+
+    database:
+        image: mysql:5.7
+        container_name: marketDB
+        restart: always
+        environment:
+            MYSQL_DATABASE: 'marketplace'
+            MYSQL_USER: 'marketplace'
+            MYSQL_PASSWORD: 'marketplace'
+            MYSQL_ROOT_PASSWORD: 'marketplace'
+            MYSQL_ROOT_HOST: '%'
+        ports:
+        # <Port exposed> : < MySQL Port running inside container>
+        - '4050:3306'
+
+
+    adminer:
+        image: adminer
+        ports:
+            - 5050:5050
+
