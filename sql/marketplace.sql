@@ -1,3 +1,5 @@
+DROP DATABASE marketplace;
+
 CREATE DATABASE marketplace;
 
 USE marketplace;
@@ -21,13 +23,15 @@ CREATE TABLE users (
 CREATE TABLE carts (
     cart_id INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
-    PRIMARY KEY (cart_id),
-    FOREIGN KEY (user_id) REFERENCES users (user_id)
+    FOREIGN KEY (user_id) REFERENCES users (user_id),
+    PRIMARY KEY (cart_id)
 );
 
 CREATE TABLE cart_product_relation (
-    cart_id INT NOT NULL NOT NULL,
-    product_id INT NOT NULL NOT NULL,
+    relation_id INT NOT NULL AUTO_INCREMENT,
+    cart_id INT NOT NULL,
+    product_id INT NOT NULL,
     FOREIGN KEY (cart_id) REFERENCES carts (cart_id),
-    FOREIGN KEY (product_id) REFERENCES products (product_id)
+    FOREIGN KEY (product_id) REFERENCES products (product_id),
+    PRIMARY KEY (relation_id)
 );

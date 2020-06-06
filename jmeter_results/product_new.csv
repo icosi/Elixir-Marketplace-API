@@ -1,0 +1,6 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1591409144085,3,/product/new,200,OK,Thread Group 1-1,text,true,,305,287,1,1,http://localhost:4444/product/new,3,0,0
+1591409144281,4,/product/new,200,OK,Thread Group 1-2,text,true,,305,287,1,1,http://localhost:4444/product/new,4,0,0
+1591409144477,4,/product/new,200,OK,Thread Group 1-3,text,true,,305,287,1,1,http://localhost:4444/product/new,3,0,0
+1591409144691,4,/product/new,200,OK,Thread Group 1-4,text,true,,305,287,1,1,http://localhost:4444/product/new,4,0,0
+1591409144887,5,/product/new,200,OK,Thread Group 1-5,text,true,,305,287,1,1,http://localhost:4444/product/new,5,0,0

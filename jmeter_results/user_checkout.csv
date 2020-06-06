@@ -1,0 +1,6 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1591409144072,12,/user/checkout,200,OK,Thread Group 1-1,text,true,,203,208,1,1,http://localhost:4444/user/checkout,12,0,0
+1591409144269,12,/user/checkout,200,OK,Thread Group 1-2,text,true,,203,208,1,1,http://localhost:4444/user/checkout,12,0,0
+1591409144467,10,/user/checkout,200,OK,Thread Group 1-3,text,true,,203,208,1,1,http://localhost:4444/user/checkout,10,0,0
+1591409144680,11,/user/checkout,200,OK,Thread Group 1-4,text,true,,203,208,1,1,http://localhost:4444/user/checkout,10,0,0
+1591409144877,10,/user/checkout,200,OK,Thread Group 1-5,text,true,,203,208,1,1,http://localhost:4444/user/checkout,10,0,0

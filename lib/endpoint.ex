@@ -24,12 +24,14 @@ defmodule MarketplaceApi.Endpoint do
   # responsible for dispatching responses
   plug(:dispatch)
 
-  post("/user/create", do: C.User.new_user(conn))
-  post("/user/cart", do: C.User.get_cart(conn))
-  post("/user/add_product", do: C.User.add_product_to_cart(conn))
+  post("/user/create", do: C.new_user(conn))
+  post("/user/cart", do: C.get_cart(conn))
+  post("/user/add_product", do: C.add_product_to_cart(conn))
+  post("/user/checkout", do: C.checkout(conn))
 
-  get("/product/all", do: C.User.get_products(conn))
-  post("/product/new", do: C.User.new_product(conn))
+  get("/product/all", do: C.get_products(conn))
+  post("/product/id", do: C.get_product_by_id(conn))
+  post("/product/new", do: C.new_product(conn))
 
   get "/status" do
     send_resp(conn, 200, Jason.encode!(%{status: "UP", front: "UP", version: "lib"}))

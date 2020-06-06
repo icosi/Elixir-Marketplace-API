@@ -17,7 +17,7 @@ defmodule MarketplaceApi.Model.Product do
 
   def changeset(struct, params) do
     struct
-    |> cast(params, [:name, :category, :description])
+    |> cast(params, [:name, :category, :description, :price])
     |> validate_required(@required)
   end
 end

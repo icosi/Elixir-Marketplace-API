@@ -1,0 +1,6 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1591409144050,9,/user/create,200,OK,Thread Group 1-1,text,true,,206,231,1,1,http://localhost:4444/user/create,9,0,1
+1591409144252,7,/user/create,200,OK,Thread Group 1-2,text,true,,206,231,1,1,http://localhost:4444/user/create,7,0,0
+1591409144450,6,/user/create,200,OK,Thread Group 1-3,text,true,,206,231,1,1,http://localhost:4444/user/create,6,0,0
+1591409144653,16,/user/create,200,OK,Thread Group 1-4,text,true,,206,231,1,1,http://localhost:4444/user/create,16,0,1
+1591409144851,12,/user/create,200,OK,Thread Group 1-5,text,true,,206,231,1,1,http://localhost:4444/user/create,12,0,0

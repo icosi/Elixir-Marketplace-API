@@ -1,4 +1,4 @@
-defmodule MarketplaceApi.Controller.User do
+defmodule MarketplaceApi.Controller do
   @moduledoc """
   Wallet Api controller
   """
@@ -54,15 +54,25 @@ defmodule MarketplaceApi.Controller.User do
     products = get_all_products()
 
     conn
-    |> put_resp_content_type("application/json")
+    # |> put_resp_content_type("application/json")
     |> send_resp(200, Jason.encode!(products))
+  end
+
+  def get_product_by_id(conn) do
+    params = conn.params
+
+    product = priv_get_product_by_id(params["product_id"])
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, Jason.encode!(product))
   end
 
   def get_cart(conn) do
     params = conn.params
 
     cart = get_cart_from_user(params["user_id"])
-    products_id = get_all_products_from_cart(cart.cart_id)
+    products_id = get_all_products_id_from_cart(cart.cart_id)
     cart_products = get_products_from_list(products_id)
 
     conn
@@ -73,14 +83,32 @@ defmodule MarketplaceApi.Controller.User do
   def add_product_to_cart(conn) do
     params = conn.params
 
-    status =
-      case insert_product_to_cart(params["user_id"], params["product_id"]) do
-        %{} -> "Cart updated"
-        _ -> "Product NOT inserted"
-      end
+    cart = get_cart_from_user(params["user_id"])
+    IO.inspect(cart.cart_id)
+
+    insert_product_to_cart(params["product_id"], cart.cart_id)
 
     resp = %{
-      status: status
+      status: "Cart updated"
+    }
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, Jason.encode!(resp))
+  end
+
+  def checkout(conn) do
+    params = conn.params
+
+    cart = get_cart_from_user(params["user_id"])
+    products_id = get_all_products_id_from_cart(cart.cart_id)
+    cart_prices = get_all_prices_from_products_id(products_id)
+    cart_sum = sum_list(cart_prices)
+
+    clean_cart(cart.cart_id)
+
+    resp = %{
+      total: cart_sum
     }
 
     conn
@@ -95,6 +123,21 @@ defmodule MarketplaceApi.Controller.User do
   #               #
   #################
 
+  def sum_list([]) do
+    0
+  end
+
+  def sum_list([h | t]) do
+    h + sum_list(t)
+  end
+
+  def clean_cart(cart_id) do
+    products =
+      CartProduct
+      |> where(cart_id: ^cart_id)
+      |> Repo.delete_all()
+  end
+
   def get_cart_from_user(id) do
     Repo.get_by!(Cart, user_id: id)
   end
@@ -103,8 +146,12 @@ defmodule MarketplaceApi.Controller.User do
     Repo.get_by!(Product, name: name)
   end
 
-  def get_product_by_id(id) do
+  def priv_get_product_by_id(id) do
     Repo.get_by!(Product, product_id: id)
+  end
+
+  def priv_get_user_by_id(id) do
+    Repo.get_by!(User, user_id: id)
   end
 
   def insert_product_to_cart(product_id, cart_id) do
@@ -117,13 +164,25 @@ defmodule MarketplaceApi.Controller.User do
     cart_product_insert = Repo.insert!(cart_product_changeset)
   end
 
-  def get_all_products_from_cart(cart_id) do
+  def get_all_products_id_from_cart(cart_id) do
     products =
       CartProduct
       |> where(cart_id: ^cart_id)
       |> Repo.all()
 
     products_id = Enum.map(products, fn x -> x.product_id end)
+  end
+
+  def get_all_prices_from_products_id(products_id) do
+    prices =
+      Enum.map(products_id, fn x ->
+        product =
+          Product
+          |> where(product_id: ^x)
+          |> Repo.one()
+
+        product.price
+      end)
   end
 
   def get_all_users do
@@ -180,7 +239,7 @@ defmodule MarketplaceApi.Controller.User do
 
   def get_products_from_list(ids) do
     Enum.map(ids, fn x ->
-      get_product_by_id(x)
+      priv_get_product_by_id(x)
     end)
   end
 end

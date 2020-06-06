@@ -6,7 +6,7 @@ defmodule MarketplaceApi.Model.CartProduct do
   @required []
   @uniqueness []
 
-  @primary_key false
+  @primary_key {:relation_id, :id, autogenerate: true}
   schema "cart_product_relation" do
     field(:cart_id, :integer)
     field(:product_id, :integer)
