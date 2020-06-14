@@ -1,7 +1,4 @@
 defmodule MarketplaceApi.Controller do
-  @moduledoc """
-  Wallet Api controller
-  """
   import Plug.Conn
   alias MarketplaceApi.Repo
   alias MarketplaceApi.Model.User
@@ -12,12 +9,6 @@ defmodule MarketplaceApi.Controller do
   require Logger
   import Ecto.Query
   import Ecto
-
-  # alias BetCore.Service.Wallet
-  # alias BetCore.Hash
-  # alias Hub88.RepoRW
-  # alias Hub88.RepoRO
-  # alias Hub88.Model.Transaction
 
   def new_user(conn) do
     params = conn.params
